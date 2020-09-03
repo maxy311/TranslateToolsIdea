@@ -7,11 +7,13 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.maxy.wutian.dialog.SampleDialogWrapper;
 import com.maxy.wutian.get.GetTranslateHelper;
+import com.maxy.wutian.log.LogManager;
 import org.jetbrains.annotations.SystemIndependent;
 
 import java.io.File;
 
 public class GetTranslateAction extends AnAction {
+
 
     @Override
     public void actionPerformed(AnActionEvent e) {
@@ -19,7 +21,7 @@ public class GetTranslateAction extends AnAction {
         Project project = e.getProject();
         printProjectInfo(project);
 //        showDialog(project);
-
+        LogManager.getInstance().initOutPath(project.getBasePath());
         getTranslate(project);
     }
 
@@ -50,27 +52,10 @@ public class GetTranslateAction extends AnAction {
         String translatePath = sampleDialogWrapper.getPath();
         String lastTag = sampleDialogWrapper.getLastTag();
         String compareDir = sampleDialogWrapper.getCompareDir();
-//        String outPutPath = Messages.showInputDialog(project,
-//                "Place Input Output Path:",
-//                "Output Path:",
-//                Messages.getQuestionIcon());
 
-        File projectFile = new File(project.getBasePath());
-        File translateTargetFile = new File(translatePath);
-        if (!translateTargetFile.exists())
-            translateTargetFile = projectFile;
-
-        if (!translateTargetFile.exists() || !translateTargetFile.isDirectory())
-            throw new RuntimeException("Output Path not exist : " + translateTargetFile.getAbsolutePath() + "    " + translateTargetFile.isDirectory());
-
-        if (!translateTargetFile.getName().contains("Translate")) {
-            translateTargetFile = new File(translateTargetFile, project.getName() + "_Translate");
-            translateTargetFile.mkdir();
-        }
-
-//        projectFile = new File("/Users/maxy/Android/workspace/SHAREit");
-        System.out.println(translateTargetFile.getAbsolutePath() +"         " + lastTag +"         " + compareDir);
-        GetTranslateHelper translateHelper = new GetTranslateHelper(projectFile, translateTargetFile, lastTag, compareDir);
-        translateHelper.startGetTranslate();
+        System.out.println(translatePath);
+        LogManager.getInstance().log(project.getBasePath() +"    ---------     " + lastTag +"         " + compareDir);
+        GetTranslateHelper translateHelper = new GetTranslateHelper(project.getName(), project.getBasePath(), translatePath, lastTag, compareDir);
+        translateHelper.start();
     }
 }

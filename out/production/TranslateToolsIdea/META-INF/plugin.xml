@@ -1,0 +1,31 @@
+<idea-plugin>
+  <id>com.wutian.maxy</id>
+  <name>TranslateTools</name>
+  <version>1.0</version>
+  <vendor email="maxy@ushareit.com" url="http://www.maxy.com">Maxy</vendor>
+
+  <description>This is a translate tools maxy@ushareit.com maxy@ushareit.com</description>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="173.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <depends>com.intellij.modules.platform</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <actions>
+    <group id="com.wutian.maxy.action.GroupedActions" text="TranslateTools" popup="true">
+      <add-to-group group-id="CodeMenu" anchor="last"/>
+      <action id="com.wutian.maxy.action.PopupDialogAction" class="com.maxy.wutian.action.TranslatePopAction"
+              text="Translate Tools" description="Opereate List"/>
+
+      <action id="GetTranslate.GetAction" class="com.maxy.wutian.action.GetTranslateAction" text="GetTranslate"/>
+      <action id="AddTranslate.AddAction" class="com.maxy.wutian.action.AddTranslateAction" text="AddTranslate"/>
+    </group>
+  </actions>
+
+</idea-plugin>

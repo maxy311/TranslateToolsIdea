@@ -4,7 +4,6 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
-import com.maxy.wutian.add.AddTranslateHelper;
 
 import java.io.File;
 
@@ -24,8 +23,8 @@ public class AddTranslateAction extends AnAction {
             throw new RuntimeException("Translate File not exist: " + translateFile.getAbsolutePath());
 
 
-        File projectFile = new File(project.getBasePath());
-        AddTranslateHelper addTranslateHelper = new AddTranslateHelper(projectFile, translateFile);
-        addTranslateHelper.startAddTranslate();
+//        File projectFile = new File(project.getBasePath());
+//        AddTranslateHelper addTranslateHelper = new AddTranslateHelper(projectFile, translateFile);
+//        addTranslateHelper.startAddTranslate();
     }
 }
