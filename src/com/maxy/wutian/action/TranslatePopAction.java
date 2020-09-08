@@ -14,18 +14,18 @@ public class TranslatePopAction extends AnAction {
 //        sampleDialogWrapper.addKeyListener(new KeyListener() {
 //            @Override
 //            public void keyTyped(KeyEvent e) {
-//                System.out.println("keyTyped");
+//                LogManager.getInstance().log("keyTyped");
 //            }
 //
 //            @Override
 //            public void keyPressed(KeyEvent e) {
-//                System.out.println("keyPressed");
+//                LogManager.getInstance().log("keyPressed");
 //            }
 //
 //            @Override
 //            public void keyReleased(KeyEvent e) {
-//                System.out.println("keyReleased");
-//                System.out.println(sampleDialogWrapper.getPath() + "   " + sampleDialogWrapper.getCompareDir());
+//                LogManager.getInstance().log("keyReleased");
+//                LogManager.getInstance().log(sampleDialogWrapper.getPath() + "   " + sampleDialogWrapper.getCompareDir());
 //            }
 //        });
 //        sampleDialogWrapper.showAndGet();

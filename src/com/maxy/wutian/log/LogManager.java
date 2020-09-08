@@ -39,6 +39,7 @@ public class LogManager {
     }
 
     public void log(String log) {
+        System.out.println(log);
         if (bufferedWriter == null)
             return;
 

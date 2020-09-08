@@ -1,5 +1,7 @@
 package com.maxy.wutian.get;
 
+import com.maxy.wutian.log.LogManager;
+
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 
@@ -16,6 +18,6 @@ public class TestGet {
         String savePath = home.getPath();
         File deskDir = new File(home, "Desktop");
 
-        System.out.println(savePath + "\n" + deskDir.exists() + "\n" + deskDir.getAbsolutePath());
+        LogManager.getInstance().log(savePath + "\n" + deskDir.exists() + "\n" + deskDir.getAbsolutePath());
     }
 }

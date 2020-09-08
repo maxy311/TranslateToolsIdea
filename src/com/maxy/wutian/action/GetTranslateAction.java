@@ -10,8 +10,6 @@ import com.maxy.wutian.get.GetTranslateHelper;
 import com.maxy.wutian.log.LogManager;
 import org.jetbrains.annotations.SystemIndependent;
 
-import java.io.File;
-
 public class GetTranslateAction extends AnAction {
 
 
@@ -29,11 +27,11 @@ public class GetTranslateAction extends AnAction {
         @SystemIndependent String projectFilePath = project.getProjectFilePath();    ///Users/maxy/Android/IdeaPorjects/TranslateTools/.idea/misc.xml
         @SystemIndependent String basePath = project.getBasePath();   // /Users/maxy/Android/IdeaPorjects/TranslateTools
 
-        System.out.println(name + "   " + projectFilePath + "    " + basePath);
+        LogManager.getInstance().log(name + "   " + projectFilePath + "    " + basePath);
         VirtualFile projectFile = project.getProjectFile();
         String projectFilePath1 = projectFile.getPath();  // /Users/maxy/Android/IdeaPorjects/TranslateTools/.idea/misc.xml
         String name1 = projectFile.getName();   //misc.xml
-        System.out.println(name1 + "    " + projectFilePath1);
+        LogManager.getInstance().log(name1 + "    " + projectFilePath1);
     }
 
     private void showDialog(Project project) {
@@ -52,8 +50,7 @@ public class GetTranslateAction extends AnAction {
         String lastTag = sampleDialogWrapper.getLastTag();
         String compareDir = sampleDialogWrapper.getCompareDir();
 
-        System.out.println(translatePath);
-        LogManager.getInstance().log(project.getBasePath() +"    ---------     " + lastTag +"         " + compareDir);
+        LogManager.getInstance().log(translatePath +"    ---------     " + lastTag +"         " + compareDir);
         GetTranslateHelper translateHelper = new GetTranslateHelper(project.getName(), project.getBasePath(), translatePath, lastTag, compareDir);
         translateHelper.start();
     }

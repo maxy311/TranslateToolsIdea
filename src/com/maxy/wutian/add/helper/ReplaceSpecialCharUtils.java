@@ -1,5 +1,7 @@
 package com.maxy.wutian.add.helper;
 
+import com.maxy.wutian.log.LogManager;
+
 public class ReplaceSpecialCharUtils {
 
     public static String replaceSpecialChar(String originLine, String line) {
@@ -16,7 +18,7 @@ public class ReplaceSpecialCharUtils {
             if (!originLine.equals(line))
                 line = replaceSpaceChar(originLine, line);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            LogManager.getInstance().log(e.toString());
         }
         return line;
     }
@@ -81,8 +83,8 @@ public class ReplaceSpecialCharUtils {
             hasChanged = true;
         }
         if (hasChanged) {
-            System.out.println("old    " + originLine);
-            System.out.println("new    " + line + "        " + tag);
+            LogManager.getInstance().log("old    " + originLine);
+            LogManager.getInstance().log("new    " + line + "        " + tag);
         }
 
         return line;
@@ -116,18 +118,18 @@ public class ReplaceSpecialCharUtils {
     private static void checkError(String originLine, String line) {
         try {
             if (!isSpecialCountEquals("%d", originLine, line))
-                System.out.println("checkError %d::: " + originLine + "\n" + line);
+                LogManager.getInstance().log("checkError %d::: " + originLine + "\n" + line);
 
             if (!isSpecialCountEquals("%s", originLine, line))
-                System.out.println("checkError %s::: " + originLine + "\n" + line);
+                LogManager.getInstance().log("checkError %s::: " + originLine + "\n" + line);
 
             for (int i = 1; i <= 5; i++) {
                 String special = "%" + i + "$s";
                 if (!isSpecialCountEquals(special, originLine, line))
-                System.out.println("checkError "+special+" ::: " + originLine + "\n" + line);
+                LogManager.getInstance().log("checkError "+special+" ::: " + originLine + "\n" + line);
             }
         } catch (Exception e) {
-            System.out.println("checkError  " + originLine + "\n" + line);
+            LogManager.getInstance().log("checkError  " + originLine + "\n" + line);
         }
     }
 

@@ -25,6 +25,7 @@ public class GetTranslateHelper {
     private String outPutPath;
     private String lastTag;
     private String compareDir;
+
     public GetTranslateHelper(String projectName, String projectPath, String outPutPath, String lastTag) {
         this(projectName, projectPath, outPutPath, lastTag, "values-ar");
     }
@@ -58,7 +59,6 @@ public class GetTranslateHelper {
         Map<String, Map<String, Map<String, String>>> preValueMap = new HashMap<>();
         if (lastTag == null) {
             ShellUtils.checkoutToTag(projectPath, lastTag);
-            System.out.println("has checkout to:" + lastTag);
             LogManager.getInstance().log("has checkout to:" + lastTag);
             readStringsToMap(preValueMap, shareitPath, "values");
             ShellUtils.checkoutToTag(projectPath, "master");
@@ -199,14 +199,12 @@ public class GetTranslateHelper {
 
         File zhDir = new File(file, "values-zh-rCN");
         if (!zhDir.exists()) {
-            System.out.println("values-zh-rCN not exists :::: " + zhDir.getAbsolutePath());
             LogManager.getInstance().log("values-zh-rCN not exists :::: " + zhDir.getAbsolutePath());
             return Collections.emptyList();
         }
 
         File zhFile = new File(zhDir, fileName);
         if (!zhFile.exists()) {
-            System.out.println("zhFile not exists :::: " + zhFile.getAbsolutePath());
             LogManager.getInstance().log("zhFile not exists :::: " + zhFile.getAbsolutePath());
             return Collections.emptyList();
         }
@@ -252,7 +250,6 @@ public class GetTranslateHelper {
 
             bw.write("</resources>");
         } catch (IOException e1) {
-            System.out.println("writeTranslateToFile Error :: " + e1.toString());
             LogManager.getInstance().log("writeTranslateToFile Error :: " + e1.toString());
         }
     }

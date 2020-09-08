@@ -1,5 +1,7 @@
 package com.maxy.wutian.utils;
 
+import com.maxy.wutian.log.LogManager;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -23,7 +25,7 @@ public class ShellUtils {
                 sb.append(line).append("\n");
             }
             String result = sb.toString();
-            System.out.println(result);
+            LogManager.getInstance().log(result);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package com.maxy.wutian.add.helper;
 import com.maxy.wutian.add.task.AddTranslateTask;
 import com.maxy.wutian.add.task.Task;
 import com.maxy.wutian.fileutils.FileUtils;
+import com.maxy.wutian.log.LogManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -40,7 +41,7 @@ public class AddTransLateHelper implements AddTranslateTask.AddTranslateListener
             for (File file : valueDir.listFiles()) {
                 if (file.isDirectory()) {
                     //has error file
-                    System.out.println(file.getAbsolutePath());
+                    LogManager.getInstance().log(file.getAbsolutePath());
                     throw new RuntimeException("Translate File Path Error!");
                 }
             }
@@ -62,7 +63,7 @@ public class AddTransLateHelper implements AddTranslateTask.AddTranslateListener
                 File origin = new File(originDir, translateFile.getName());
                 if (!origin.exists()) {
                     origin.mkdir();
-//                    System.out.println(origin.getAbsolutePath() + "      " + origin.getName());
+//                    LogManager.getInstance().log(origin.getAbsolutePath() + "      " + origin.getName());
 //                    continue;
                 }
                 startAddTranslate(translateFile, origin);
@@ -199,7 +200,7 @@ public class AddTransLateHelper implements AddTranslateTask.AddTranslateListener
                         if (i == mTaskList.size() && mFixedThreadPool != null) {
                             mFixedThreadPool.shutdownNow();
                             mFixedThreadPool = null;
-                            System.out.println("      FixedThreadPool.shutdownNow()      ");
+                            LogManager.getInstance().log("      FixedThreadPool.shutdownNow()      ");
                             break;
                         }
                         Thread.sleep(1000);
