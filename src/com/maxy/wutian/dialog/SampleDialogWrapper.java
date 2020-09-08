@@ -1,9 +1,11 @@
 package com.maxy.wutian.dialog;
 
 import com.intellij.openapi.ui.DialogWrapper;
+import com.maxy.wutian.utils.FileDirUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class SampleDialogWrapper extends DialogWrapper {
     private JTextField pathText;
@@ -23,6 +25,9 @@ public class SampleDialogWrapper extends DialogWrapper {
         JLabel pathLabel = new JLabel("输入输出路径:");
         pathLabel.setLocation(0, 0);
         pathText = new JTextField();
+        File deskTopFile = FileDirUtils.getDeskTopFile();
+        if (deskTopFile.exists())
+            pathText.setText(deskTopFile.getAbsolutePath());
         pathText.setPreferredSize(new Dimension(200, 25));
         pathText.setLocation(50, 0);
         dialogPanel.add(pathLabel);

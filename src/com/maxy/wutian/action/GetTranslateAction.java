@@ -21,7 +21,6 @@ public class GetTranslateAction extends AnAction {
         Project project = e.getProject();
         printProjectInfo(project);
 //        showDialog(project);
-        LogManager.getInstance().initOutPath(project.getBasePath());
         getTranslate(project);
     }
 
