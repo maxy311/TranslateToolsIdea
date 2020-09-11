@@ -26,7 +26,9 @@
             <action id="GetTranslate.GetAction" class="com.maxy.wutian.action.GetTranslateAction" text="GetTranslate"/>
             <action id="AddTranslate.AddAction" class="com.maxy.wutian.action.AddTranslateAction" text="AddTranslate"/>
             <action id="WriteExcel.Action" class="com.maxy.wutian.action.WriteExcelAction" text="WriteExcelAction"/>
+            <action id="GetSpecialString.Action" class="com.maxy.wutian.action.GetSpecialStringAction" text="GetSpecialStringAction"/>
         </group>
+
 
     </actions>
 
