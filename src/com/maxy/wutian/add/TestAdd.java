@@ -10,9 +10,9 @@ public class TestAdd {
 //        String parentPath = path.substring(0, path.lastIndexOf(File.separator));
 //        LogManager.getInstance().log(parentPath);
 
-        String projectPath = "/Users/maxy/Android/workspace/SHAREit";
-        String translatePath = "/Users/maxy/Desktop/LXQ-0284_Clean_44L_0907";
-        AddTranslateHelper addTranslateHelper = new AddTranslateHelper("SHAREit", projectPath, translatePath);
+        String projectPath = "/Users/maxy/Android/workspace/troy";
+        String translatePath = "/Users/maxy/Desktop/LXQ-0287_Troy_Clean-5L";
+        AddTranslateHelper addTranslateHelper = new AddTranslateHelper("troy", projectPath, translatePath);
         addTranslateHelper.start();
     }
 }
