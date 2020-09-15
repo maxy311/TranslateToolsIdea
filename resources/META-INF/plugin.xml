@@ -20,14 +20,13 @@
     <actions>
         <group id="com.wutian.maxy.action.GroupedActions" text="TranslateTools" popup="true">
             <add-to-group group-id="CodeMenu" anchor="last"/>
-            <action id="com.wutian.maxy.action.PopupDialogAction" class="com.maxy.wutian.action.TranslatePopAction"
-                    text="Translate Tools" description="Opereate List"/>
-
             <action id="GetTranslate.GetAction" class="com.maxy.wutian.action.GetTranslateAction" text="GetTranslate"/>
             <action id="AddTranslate.AddAction" class="com.maxy.wutian.action.AddTranslateAction" text="AddTranslate"/>
             <action id="WriteExcel.Action" class="com.maxy.wutian.action.WriteExcelAction" text="WriteExcelAction"/>
             <action id="GetSpecialString.Action" class="com.maxy.wutian.action.GetSpecialStringAction" text="GetSpecialStringAction"/>
+            <action id="ImportSpecial.Action" class="com.maxy.wutian.action.ImportSpecialAction" text="ImportSpecialAction"/>
         </group>
+
 
 
     </actions>

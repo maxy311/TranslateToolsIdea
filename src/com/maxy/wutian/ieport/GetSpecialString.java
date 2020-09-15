@@ -77,10 +77,12 @@ public class GetSpecialString {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(specialKeyFile)))) {
             String line = "";
             while ((line = br.readLine()) != null) {
-                if (line.contains("<string name=")) {
-                    keys.add(line.split("\">")[0]);
-                } else if (line.length() != 0) {
+                if (line.startsWith("values-"))
                     value_xxList.add(line);
+                else {
+                    if (line.startsWith("<string") || line.contains("plurals") || line.contains("<item") || line.contains("-array")) {
+                        keys.add(line.split("\">")[0]);
+                    }
                 }
             }
         } catch (FileNotFoundException e) {
