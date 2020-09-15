@@ -8,10 +8,10 @@ import java.io.InputStreamReader;
 
 public class ShellUtils {
 
-    public static void checkoutToTag(String projectPath, String tag) {
+    public static boolean checkoutToTag(String projectPath, String tag) {
         File gitForAllFile = new File(projectPath + File.separator + "git-for-all.sh");
         if (!gitForAllFile.exists()) {
-            return;
+            return false;
         }
         try {
             String command = gitForAllFile.getAbsolutePath() + " checkout " + tag;
@@ -26,8 +26,9 @@ public class ShellUtils {
             }
             String result = sb.toString();
             LogManager.getInstance().log(result);
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
     }
 }

@@ -90,16 +90,42 @@ public class AddTransLateHelper implements AddTranslateTask.AddTranslateListener
         if (valuesDir == null || !valuesDir.exists())
             throw new RuntimeException("can not find values Dir :" + valuesDir.getAbsolutePath());
 
-        File valueFile = new File(valuesDir, translateFileName);
-        if (valueFile == null || !valueFile.exists())
+        File valueFile = getValueFile(valuesDir, translateFileName);
+        if (!valueFile.exists())
             throw new RuntimeException(translateFile.getAbsolutePath() + "     " + "can not find values file :" + valueFile.getAbsolutePath());
         List<String> lines = FileUtils.readXmlToList(valueFile);
         mValuesData.put(translateFileName, lines);
     }
 
+    private File getValueFile(File valuesDir, String translateFileName) {
+        File valueFile = new File(valuesDir, translateFileName);
+        if (valueFile.exists())
+            return valueFile;
+        if (translateFileName.contains("#")) {
+            String[] split = translateFileName.split("#");
+            String valueFilePath = valueFile.getAbsolutePath();
+            String filePath = valueFilePath.replace("main", split[0]).replace(translateFileName, split[1]);
+            File file = new File(filePath);
+            if (file.exists())
+                return file;
+        }
+        return valueFile;
+    }
     @Override
     public void doAddTranslate(File translateFile, File originDir) {
-        File valueXXFile = new File(originDir, translateFile.getName());
+        String fileName = translateFile.getName();
+        File valueXXFile = new File(originDir, fileName);
+        if (!valueXXFile.exists() && fileName.contains("#")) {
+            String[] split = fileName.split("#");
+            String flavorPath = originDir.getAbsolutePath().replace("main", split[0]);
+            File flavorValueXXFile = new File(flavorPath);
+            File flavorValueFile = new File(flavorValueXXFile.getParentFile(), "values");
+            if (flavorValueFile.exists()) {
+                if (!flavorValueXXFile.exists())
+                    flavorValueXXFile.mkdirs();
+                valueXXFile = new File(flavorValueXXFile, split[1]);
+            }
+        }
         if (!valueXXFile.exists()) {
             try {
                 valueXXFile.createNewFile();

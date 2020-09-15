@@ -110,6 +110,13 @@ public class AddTranslateHelper {
             public boolean accept(File file) {
                 if (file.isHidden())
                     return false;
+                String fileName = file.getName();
+                if (!fileName.endsWith("xml"))
+                    return false;
+                if (fileName.toLowerCase().contains("releasenote"))
+                    return false;
+                if (fileName.toLowerCase().contains("release"))
+                    return false;
                 return true;
             }
         })) {

@@ -11,7 +11,7 @@ public class TestAdd {
 //        LogManager.getInstance().log(parentPath);
 
         String projectPath = "/Users/maxy/Android/workspace/troy";
-        String translatePath = "/Users/maxy/Desktop/LXQ-0287_Troy_Clean-5L";
+        String translatePath = "/Users/maxy/Desktop/troy_Translate";
         AddTranslateHelper addTranslateHelper = new AddTranslateHelper("troy", projectPath, translatePath);
         addTranslateHelper.start();
     }

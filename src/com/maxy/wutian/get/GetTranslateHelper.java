@@ -57,8 +57,7 @@ public class GetTranslateHelper {
 
         //read last tag values file to map
         Map<String, Map<String, Map<String, String>>> preValueMap = new HashMap<>();
-        if (lastTag == null) {
-            ShellUtils.checkoutToTag(projectPath, lastTag);
+        if (lastTag != null && ShellUtils.checkoutToTag(projectPath, lastTag)) {
             LogManager.getInstance().log("has checkout to:" + lastTag);
             readStringsToMap(preValueMap, shareitPath, "values");
             ShellUtils.checkoutToTag(projectPath, "master");
@@ -84,7 +83,12 @@ public class GetTranslateHelper {
                 mapMap = new HashMap<>();
 
             Map<String, String> fileMap = FileUtils.readStringToLinkedHasMap(file);
-            mapMap.put(file.getName(), fileMap);
+            //src/main/res/value_xx/xxxx.xml; ==== file
+            File srcMainFile = file.getParentFile().getParentFile().getParentFile();
+            if (srcMainFile.getName().equals("main"))
+                mapMap.put(file.getName(), fileMap);
+            else
+                mapMap.put(srcMainFile.getName() + "#" + file.getName(), fileMap);
             valuesMap.put(fileModule, mapMap);
         }
     }
