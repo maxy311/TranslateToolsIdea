@@ -86,12 +86,15 @@ public class GetTranslateHelper {
                 mapMap = new HashMap<>();
 
             Map<String, String> fileMap = FileUtils.readStringToLinkedHasMap(file);
-            //src/main/res/value_xx/xxxx.xml; ==== file
-            File srcMainFile = file.getParentFile().getParentFile().getParentFile();
-            if (srcMainFile.getName().equals("main"))
-                mapMap.put(file.getName(), fileMap);
-            else
-                mapMap.put(srcMainFile.getName() + Constants.WRITE_FILENAME_FLAVOR_SPLIT + file.getName(), fileMap);
+            String[] resSplit = file.getAbsolutePath().split("src");
+            if (resSplit.length == 1)
+                LogManager.getInstance().log("file split src error : " + file.getAbsolutePath());
+            String mapKey = resSplit[1];
+            if (mapKey.contains("values-")) {
+                File parentFile = file.getParentFile();
+                mapKey = mapKey.replace(parentFile.getName(), "values");
+            }
+            mapMap.put(mapKey, fileMap);
             valuesMap.put(fileModule, mapMap);
         }
     }
@@ -101,9 +104,9 @@ public class GetTranslateHelper {
         String module = parent.replace(projectPath, "");
         module = module.replace("/", "_");
         if (module.contains("src"))
-            return module.substring(1, module.indexOf("src") - 1);
+            return module.substring(1, module.indexOf("src") + 3);
         else
-            return module.substring(1, module.indexOf("res") - 1);
+            return module.substring(1, module.indexOf("res") + 3);
     }
 
     private boolean isValuesFile(File file, String valueDir) {
@@ -196,21 +199,10 @@ public class GetTranslateHelper {
             return Collections.emptyList();
 
         //try write values-zh-rCN file
-        String moduleRealPath = projectPath + "/" + module.replace("_", "/");
-        String moduleResPath = moduleRealPath + "/src/main/res";
-        File file = new File(moduleResPath);
-        if (!file.exists()) {
-            moduleResPath = moduleRealPath + "/res";
-            file = new File(moduleResPath);
-        }
+        String modulePath = projectPath + File.separator + module.replace("_", "/") + File.separator + fileName;
+        modulePath = modulePath.replace("values", "values-zh-rCN");
 
-        File zhDir = new File(file, "values-zh-rCN");
-        if (!zhDir.exists()) {
-            LogManager.getInstance().log("values-zh-rCN not exists :::: " + zhDir.getAbsolutePath());
-            return Collections.emptyList();
-        }
-
-        File zhFile = new File(zhDir, fileName);
+        File zhFile = new File(modulePath);
         if (!zhFile.exists()) {
             LogManager.getInstance().log("zhFile not exists :::: " + zhFile.getAbsolutePath());
             return Collections.emptyList();
@@ -280,7 +272,7 @@ public class GetTranslateHelper {
             valueDir = new File(translateOutFile, "values");
         if (!valueDir.exists())
             valueDir.mkdir();
-        File file = new File(valueDir, module + "_strings.xml");
+        File file = new File(valueDir, module + ".xml");
         try {
             if (!file.exists())
                 file.createNewFile();
