@@ -57,10 +57,14 @@ public class GetTranslateHelper {
 
         //read last tag values file to map
         Map<String, Map<String, Map<String, String>>> preValueMap = new HashMap<>();
-        if (lastTag != null && ShellUtils.checkoutToTag(projectPath, lastTag)) {
-            LogManager.getInstance().log("has checkout to:" + lastTag);
-            readStringsToMap(preValueMap, shareitPath, "values");
-            ShellUtils.checkoutToTag(projectPath, "master");
+        if (lastTag != null) {
+            String currentBranch = ShellUtils.getCurrentBranch(projectPath);
+            if (ShellUtils.checkoutToTag(projectPath, lastTag)) {
+                LogManager.getInstance().log("has checkout to:" + lastTag + "    " + currentBranch);
+                readStringsToMap(preValueMap, shareitPath, "values");
+                if (currentBranch != null)
+                    ShellUtils.checkoutToTag(projectPath, currentBranch);
+            }
         }
 
         printTranslateFile(valuesMap, valuesXXMap, preValueMap);
