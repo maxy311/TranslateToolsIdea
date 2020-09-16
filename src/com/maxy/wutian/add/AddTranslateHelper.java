@@ -1,5 +1,6 @@
 package com.maxy.wutian.add;
 
+import com.maxy.wutian.Constants;
 import com.maxy.wutian.add.helper.AddTransLateHelper;
 import com.maxy.wutian.fileutils.FileUtils;
 import com.maxy.wutian.get.GetTranslateHelper;
@@ -205,13 +206,13 @@ public class AddTranslateHelper {
             while ((line = br.readLine()) != null) {
                 if (line.contains("<resources>") || line.contains("</resources>") || line.contains("<?xml"))
                     continue;
-                if (line.startsWith(GetTranslateHelper.WRITE_FIELNMAE_SPLIT)) {
+                if (line.startsWith(Constants.WRITE_FILENAME_SPLIT)) {
                     if (bw != null) {
                         writeLine(bw, "</resources>");
                         bw.close();
                     }
 
-                    String fileName = line.replace(GetTranslateHelper.WRITE_FIELNMAE_SPLIT, "").trim();
+                    String fileName = line.replace(Constants.WRITE_FILENAME_SPLIT, "").trim();
                     bw = resetOutFileWriter(valueXXDir, fileName);
                     bw.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n");
                 } else {

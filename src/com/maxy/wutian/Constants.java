@@ -11,4 +11,8 @@ public class Constants {
             "    git -C \"$folder\" rev-parse HEAD\n" +
             "}\n" +
             "current_branch $1";
+
+
+    public static final String WRITE_FILENAME_SPLIT = "    //-----------------------------";
+    public static final String WRITE_FILENAME_FLAVOR_SPLIT = "#";
 }

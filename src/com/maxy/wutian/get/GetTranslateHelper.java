@@ -1,5 +1,6 @@
 package com.maxy.wutian.get;
 
+import com.maxy.wutian.Constants;
 import com.maxy.wutian.fileutils.FileUtils;
 import com.maxy.wutian.log.LogManager;
 import com.maxy.wutian.utils.ResFileFilter;
@@ -18,8 +19,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class GetTranslateHelper {
-    public static final String WRITE_FIELNMAE_SPLIT = "    //-----------------------------";
-
     private String projectName;
     private String projectPath;
     private String outPutPath;
@@ -43,25 +42,25 @@ public class GetTranslateHelper {
     }
 
     private void startGetTranslate() {
-        //1. delete origin shareit file;
-        deleteShareitFile(getDesktopShareitFile());
+        //1. delete origin  file;
+        checkTranslateOutFile(getTranslateOutFile());
 
-        File shareitPath = new File(projectPath);
+        File projectFile = new File(projectPath);
         //read values file to map
         Map<String, Map<String, Map<String, String>>> valuesMap = new HashMap<>(); // module -- file -- strings.
-        readStringsToMap(valuesMap, shareitPath, "values");
+        readStringsToMap(valuesMap, projectFile, "values");
 
         //read values-XX file to map
         Map<String, Map<String, Map<String, String>>> valuesXXMap = new HashMap<>();
-        readStringsToMap(valuesXXMap, shareitPath, compareDir);
+        readStringsToMap(valuesXXMap, projectFile, compareDir);
 
         //read last tag values file to map
         Map<String, Map<String, Map<String, String>>> preValueMap = new HashMap<>();
         if (lastTag != null) {
             String currentBranch = ShellUtils.getCurrentBranch(projectPath);
             if (ShellUtils.checkoutToTag(projectPath, lastTag)) {
-                LogManager.getInstance().log("has checkout to:" + lastTag + "    " + currentBranch);
-                readStringsToMap(preValueMap, shareitPath, "values");
+                LogManager.getInstance().log("has checkout to:" + lastTag + " ;; currentBranch = " + currentBranch);
+                readStringsToMap(preValueMap, projectFile, "values");
                 if (currentBranch != null)
                     ShellUtils.checkoutToTag(projectPath, currentBranch);
             }
@@ -92,7 +91,7 @@ public class GetTranslateHelper {
             if (srcMainFile.getName().equals("main"))
                 mapMap.put(file.getName(), fileMap);
             else
-                mapMap.put(srcMainFile.getName() + "#" + file.getName(), fileMap);
+                mapMap.put(srcMainFile.getName() + Constants.WRITE_FILENAME_FLAVOR_SPLIT + file.getName(), fileMap);
             valuesMap.put(fileModule, mapMap);
         }
     }
@@ -242,7 +241,7 @@ public class GetTranslateHelper {
             bw.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n");
 
             for (String fileName : translateData.keySet()) {
-                bw.write(WRITE_FIELNMAE_SPLIT + fileName);
+                bw.write(Constants.WRITE_FILENAME_SPLIT + fileName);
                 bw.write("\n");
                 bw.flush();
                 List<String> list = translateData.get(fileName);
@@ -273,12 +272,12 @@ public class GetTranslateHelper {
     }
 
     private File getModuleFile(String module, boolean isZHFile) {
-        File shareitFile = getDesktopShareitFile();
+        File translateOutFile = getTranslateOutFile();
         File valueDir = null;
         if (isZHFile)
-            valueDir = new File(shareitFile, "values-zh-rCN");
+            valueDir = new File(translateOutFile, "values-zh-rCN");
         else
-            valueDir = new File(shareitFile, "values");
+            valueDir = new File(translateOutFile, "values");
         if (!valueDir.exists())
             valueDir.mkdir();
         File file = new File(valueDir, module + "_strings.xml");
@@ -290,24 +289,25 @@ public class GetTranslateHelper {
         return file;
     }
 
-    private File getDesktopShareitFile() {
+    private File getTranslateOutFile() {
         File file = new File(outPutPath);
-        File shareitFile = new File(file, projectName + "_Translate");
-        if (!shareitFile.exists())
-            shareitFile.mkdir();
-        return shareitFile;
+        File translateOutFile = new File(file, projectName + "_Translate");
+        if (!translateOutFile.exists())
+            translateOutFile.mkdir();
+        return translateOutFile;
     }
 
-    private void deleteShareitFile(File desktopShareitFile) {
-        if (desktopShareitFile.isDirectory()) {
-            for (File listFile : desktopShareitFile.listFiles()) {
-                deleteShareitFile(listFile);
+    private void checkTranslateOutFile(File translateOutFile) {
+        //Delete old file
+        if (translateOutFile.isDirectory()) {
+            for (File listFile : translateOutFile.listFiles()) {
+                checkTranslateOutFile(listFile);
             }
 
-            if (desktopShareitFile.listFiles().length == 0)
-                desktopShareitFile.delete();
+            if (translateOutFile.listFiles().length == 0)
+                translateOutFile.delete();
         } else {
-            desktopShareitFile.delete();
+            translateOutFile.delete();
         }
     }
 }
