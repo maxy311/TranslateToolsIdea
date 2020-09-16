@@ -1,9 +1,8 @@
 package com.maxy.wutian.add;
 
 import com.maxy.wutian.Constants;
-import com.maxy.wutian.add.helper.AddTransLateHelper;
+import com.maxy.wutian.add.helper.AddTranslateHandler;
 import com.maxy.wutian.fileutils.FileUtils;
-import com.maxy.wutian.get.GetTranslateHelper;
 import com.maxy.wutian.log.LogManager;
 
 import java.io.BufferedReader;
@@ -36,7 +35,7 @@ public class AddTranslateHelper {
     }
 
     public void start() {
-        File translateFile = getShareitTranslateDir();
+        File translateFile = getTranslateDir();
         FileUtils.deleteFile(translateFile);
 
         File file = new File(translatePath);
@@ -48,9 +47,8 @@ public class AddTranslateHelper {
         slipFile(file);
 
         // 2. add Translate
-        for (File listFile : translateFile.listFiles()) {
-            addTranslate(listFile);
-        }
+        AddTranslateHandler addTranslateHandler = new AddTranslateHandler(projectPath, translateFile.getAbsolutePath());
+        addTranslateHandler.start();
     }
 
     private void addFileNameTag(File file) {
@@ -126,43 +124,6 @@ public class AddTranslateHelper {
         return valuesMap;
     }
 
-    private void addTranslate(File file) {
-        if (!file.isDirectory()) {
-            System.out.println("addTranslate Error :: " + file.getName());
-            return;
-        }
-
-        boolean childIsValues = false;
-        File[] childFiles = file.listFiles();
-        for (File listFile : childFiles) {
-            childIsValues = listFile.getName().startsWith("values");
-            if (childIsValues)
-                break;
-        }
-
-        if (!childIsValues) {
-            for (File childFile : childFiles) {
-                addTranslate(childFile);
-            }
-            return;
-        }
-
-        File moduleResFile = getShareitModuleResFile(file);
-        AddTransLateHelper addTransLateHelper = new AddTransLateHelper();
-        addTransLateHelper.addTranslate(file, moduleResFile);
-    }
-
-    private File getShareitModuleResFile(File file) {
-        String filePath = file.getAbsolutePath();
-        String modulePath = filePath.replace(translateSplitPath, "");
-        File moduleFile = new File(projectPath, modulePath);
-
-        File resFile = new File(moduleFile, "src/main/res");
-        if (!resFile.exists())
-            resFile = new File(moduleFile, "res");
-        return resFile;
-    }
-
     private void slipFile(File file) {
         for (File valueDir : file.listFiles(new FileFilter() {
             @Override
@@ -183,21 +144,18 @@ public class AddTranslateHelper {
     }
 
     private void splitFileToValueXX(File xmlFile) {
-        // create vaules-XX Dir
-        File shareitFile = getShareitTranslateDir();
+        File translateDir = getTranslateDir();
         String name = xmlFile.getName();
-        String valueXXName = xmlFile.getParentFile().getName();
-        String replaceName = name.replace("_strings.xml", "");
-        replaceName = replaceName.replace("_", File.separator);
-        File valueXXDir = new File(shareitFile, replaceName + File.separator + valueXXName);
-        if (!valueXXDir.exists())
-            valueXXDir.mkdirs();
+        String replaceName = name.replace(".xml", "").replace("_", File.separator);
+        File translateSrcDir = new File(translateDir, replaceName);   //src dir;
+        if (!translateSrcDir.exists())
+            translateSrcDir.mkdirs();
 
         // out xmlFile to real file;
-        splitXmlFile(valueXXDir, xmlFile);
+        splitXmlFile(translateSrcDir, xmlFile);
     }
 
-    private void splitXmlFile(File valueXXDir, File xmlFile) {
+    private void splitXmlFile(File translateSrcDir, File xmlFile) {
         BufferedWriter bw = null;
         try (BufferedReader br = new BufferedReader(new FileReader(xmlFile))) {
             StringBuffer sb = new StringBuffer();
@@ -206,14 +164,14 @@ public class AddTranslateHelper {
             while ((line = br.readLine()) != null) {
                 if (line.contains("<resources>") || line.contains("</resources>") || line.contains("<?xml"))
                     continue;
-                if (line.startsWith(Constants.WRITE_FILENAME_SPLIT)) {
+                if (line.contains(Constants.WRITE_FILENAME_SPLIT)) {
                     if (bw != null) {
                         writeLine(bw, "</resources>");
                         bw.close();
                     }
 
                     String fileName = line.replace(Constants.WRITE_FILENAME_SPLIT, "").trim();
-                    bw = resetOutFileWriter(valueXXDir, fileName);
+                    bw = resetOutFileWriter(translateSrcDir, fileName);
                     bw.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n");
                 } else {
                     if (bw == null) {
@@ -279,14 +237,16 @@ public class AddTranslateHelper {
         bw.flush();
     }
 
-    private BufferedWriter resetOutFileWriter(File valueXXDir, String fileName) {
+    private BufferedWriter resetOutFileWriter(File srcDir, String fileName) {
         BufferedWriter bw = null;
         try {
+            File file = new File(srcDir, fileName);
+            File valuesXXDir = file.getParentFile();
+            if (!valuesXXDir.exists() )
+                valuesXXDir.mkdirs();
 
-            File file = new File(valueXXDir, fileName);
             if (!file.exists())
                 file.createNewFile();
-
             bw = new BufferedWriter(new FileWriter(file));
         } catch (IOException e) {
         }
@@ -310,8 +270,6 @@ public class AddTranslateHelper {
             return false;
         String fileName = file.getName();
 
-        if (fileName.contains("push"))
-            return false;
         if (fileName.toLowerCase().contains("releasenote"))
             return false;
         if (fileName.toLowerCase().contains("release"))
@@ -342,11 +300,11 @@ public class AddTranslateHelper {
         FileUtils.fileChannelCopy(releaseNoteFile, file);
     }
 
-    public File getShareitTranslateDir() {
-        File shareitFile = new File(translateSplitPath);
-        if (shareitFile.exists())
-            shareitFile.mkdir();
-        return shareitFile;
+    public File getTranslateDir() {
+        File translateSplitPath = new File(this.translateSplitPath);
+        if (translateSplitPath.exists())
+            translateSplitPath.mkdir();
+        return translateSplitPath;
     }
 
 }

@@ -1,9 +1,5 @@
 package com.maxy.wutian.add;
 
-import com.maxy.wutian.log.LogManager;
-
-import java.io.File;
-
 public class TestAdd {
     public static void main(String[] args) {
 //        String path = "/Users/maxy/Android/workspace/SHAREit/ShareAd/AdSdkCpi/src/main/res/values-zh-rCN/strings.xml";
