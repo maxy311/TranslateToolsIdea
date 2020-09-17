@@ -22,12 +22,11 @@
             <add-to-group group-id="CodeMenu" anchor="last"/>
             <action id="GetTranslate.GetAction" class="com.maxy.wutian.action.GetTranslateAction" text="GetTranslate"/>
             <action id="AddTranslate.AddAction" class="com.maxy.wutian.action.AddTranslateAction" text="AddTranslate"/>
-            <action id="WriteExcel.Action" class="com.maxy.wutian.action.WriteExcelAction" text="WriteExcelAction"/>
+            <action id="WriteExcel.Action" class="com.maxy.wutian.action.XmlToExcelAction" text="WriteExcelAction"/>
+            <action id="ExcelToFile.Action" class="com.maxy.wutian.action.ExcelToXmlAction" text="ExcelToXmlAction"/>
             <action id="GetSpecialString.Action" class="com.maxy.wutian.action.GetSpecialStringAction" text="GetSpecialStringAction"/>
             <action id="ImportSpecial.Action" class="com.maxy.wutian.action.ImportSpecialAction" text="ImportSpecialAction"/>
         </group>
-
-
 
     </actions>
 

@@ -207,6 +207,8 @@ public class FileUtils {
     }
 
     public static void deleteFile(File file) {
+        if (!file.exists())
+            return;
         if (file.isDirectory()) {
             for (File listFile : file.listFiles()) {
                 deleteFile(listFile);
