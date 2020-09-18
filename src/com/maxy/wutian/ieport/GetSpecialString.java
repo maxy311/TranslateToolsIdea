@@ -1,5 +1,6 @@
 package com.maxy.wutian.ieport;
 
+import com.maxy.wutian.fileutils.FileUtils;
 import com.maxy.wutian.log.LogManager;
 import com.maxy.wutian.utils.FileDirUtils;
 import com.maxy.wutian.utils.TranslateFilter;
@@ -74,26 +75,36 @@ public class GetSpecialString {
         keys = new ArrayList<>();
         value_xxList = new ArrayList<>();
         File specialKeyFile = new File(specialKeyPath);
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(specialKeyFile)))) {
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                if (line.startsWith("values-"))
-                    value_xxList.add(line);
-                else {
-                    if (line.startsWith("<string") || line.contains("plurals") || line.contains("<item") || line.contains("-array")) {
-                        keys.add(line.split("\">")[0]);
-                    }
+        List<String> list = FileUtils.readXmlToList(specialKeyFile);
+        for (String line : list) {
+            line = line.trim();
+            if (isNotTranslate(line))
+                continue;
+            if (line.startsWith("values-")) {
+                value_xxList.add(line);
+                System.out.println(line);
+            }
+            else {
+                if (line.startsWith("<string") || line.contains("plurals") || line.contains("<item") || line.contains("-array")) {
+                    String key = line.split("\">")[0];
+                    keys.add(key);
+                    System.out.println(key);
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         LogManager.getInstance().log(keys.toString());
         LogManager.getInstance().log(value_xxList.toString());
     }
 
+    private boolean isNotTranslate(String str) {
+        if (str.contains("translate") || str.contains("translatable") || str.contains("translatable"))
+            return true;
+        if (str.contains("\">@string/"))
+            return true;
+        if (str.contains("<string name=\"app_name\">"))
+            return true;
+        return false;
+    }
 
     public void start() {
         try {
@@ -147,7 +158,8 @@ public class GetSpecialString {
 
     private void storeToList(File file, String specialLine) {
         List<String> storeList = getStoreList(file);
-        storeList.add(specialLine);
+        if (!storeList.contains(specialLine))
+            storeList.add(specialLine);
     }
 
     public List<String> getStoreList(File file) {

@@ -1,6 +1,5 @@
 package com.maxy.wutian.ieport;
 
-import com.maxy.wutian.add.helper.ReplaceSpecialCharUtils;
 import com.maxy.wutian.fileutils.FileUtils;
 import com.maxy.wutian.fileutils.Utils;
 import com.maxy.wutian.log.LogManager;
@@ -65,9 +64,8 @@ public class ImportSpecialString {
                 continue;
             }
 
-            //listFile is values dir;
-            doWriteSpecialFile(listFile);
-
+            if (listFile.getName().equals("values"))
+                doWriteSpecialFile(listFile);
         }
     }
 

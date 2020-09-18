@@ -10,7 +10,7 @@ public class test {
 
     public static void textExport() {
         String shareitPath = "/Users/maxy/Android/workspace/SHAREit";
-        String inputPath = "/Users/maxy/Desktop/values.xml";
+        String inputPath = "/Users/maxy/Desktop/Log 2.txt";
         GetSpecialString getSpecialString = new GetSpecialString("Troy",shareitPath, inputPath);
         getSpecialString.start();
     }
