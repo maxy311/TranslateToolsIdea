@@ -1,5 +1,6 @@
 package com.maxy.wutian.world;
 
+import com.maxy.wutian.Constants;
 import com.maxy.wutian.fileutils.FileUtils;
 import com.maxy.wutian.log.LogManager;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -123,7 +124,7 @@ public class ExcelToFile {
     }
 
     private BufferedWriter createModuleWrite(File exportDir, String moduleName, boolean isZHFile) throws IOException {
-        File valuesDir = new File(exportDir, isZHFile ? "value-zh-rCN" : "values");
+        File valuesDir = new File(exportDir, isZHFile ? "values-zh-rCN" : "values");
         if (!valuesDir.exists())
             valuesDir.mkdirs();
         File valueFile = new File(valuesDir, moduleName.trim());
@@ -132,17 +133,17 @@ public class ExcelToFile {
         return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(valueFile)));
     }
 
-    private void writeXmlFileName(BufferedWriter enBw, BufferedWriter zhBw, String fileName,boolean addSpace) throws IOException {
+    private void writeXmlFileName(BufferedWriter enBw, BufferedWriter zhBw, String fileName, boolean addSpace) throws IOException {
 //        if (addSpace) {
-            writeSpaceLine(enBw, 2);
-            writeSpaceLine(zhBw, 2);
+        writeSpaceLine(enBw, 2);
+        writeSpaceLine(zhBw, 2);
 //        }
 
-        enBw.write("    " + fileName);
+        enBw.write(Constants.WRITE_FILENAME_SPLIT + fileName);
         enBw.newLine();
         enBw.flush();
 
-        zhBw.write("    " + fileName);
+        zhBw.write(Constants.WRITE_FILENAME_SPLIT + fileName);
         zhBw.newLine();
         zhBw.flush();
     }

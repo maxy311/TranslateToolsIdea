@@ -36,8 +36,6 @@ public class XmlToExcel {
             Map<String, Map<String, List<String>>> map = getWriteExcelData(valueFile, valueZhFile);
             dataMap.put(valueFile.getName(), map);
         }
-
-        LogManager.getInstance().log(dataMap.toString());
         File excelFile = new File(excelFilePath);
         if (excelFile.exists())
             excelFile.delete();
@@ -102,7 +100,6 @@ public class XmlToExcel {
                         rowIndex++;
                         row = sheet.createRow(rowIndex);
                     }
-                    System.out.println("---------- fileNameStartRow =  " + fileNameStartRow + "    " + rowIndex);
                     CellRangeAddress cellRangeAddress = new CellRangeAddress(fileNameStartRow, rowIndex - 1, 2, 3);
                     sheet.addMergedRegion(cellRangeAddress);
 

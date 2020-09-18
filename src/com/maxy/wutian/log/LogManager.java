@@ -9,9 +9,12 @@ public class LogManager {
 
     private LogManager() {
         File deskTopFile = FileDirUtils.getDeskTopFile();
+        System.out.println("--------------------"+"/Users/maxy/Desktop".equals(deskTopFile.getAbsolutePath()));
         boolean deskFileExist = deskTopFile.exists();
         if (!deskFileExist)
             deskTopFile = new File("/Users/maxy/Desktop");
+
+
         initOutPath(deskTopFile.getAbsolutePath());
         log("LogManager : " + "deskFileExist = " + deskFileExist + "---------" + deskTopFile.getAbsolutePath());
     }

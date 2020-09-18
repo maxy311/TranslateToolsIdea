@@ -25,7 +25,7 @@ public class ExcelToXmlAction extends AnAction {
         }
 
         LogManager.getInstance().log("WriteExcelAction : " + project.getName() + "   " + project.getBasePath() + "      " + excelPath);
-        ExcelToFile excelToFile = new ExcelToFile(project.getName(), excelPath);
+        ExcelToFile excelToFile = new ExcelToFile(excelPath, "");
         excelToFile.start();
     }
 }
