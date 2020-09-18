@@ -7,24 +7,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-public class InputTwoDialog extends DialogWrapper {
+public class GetSpecialStringDialog extends DialogWrapper {
     private JTextField pathText;
     private JTextField specialStringPath;
-    private String title1;
-    private String title2;
-    public InputTwoDialog(String title1, String title2) {
+    public GetSpecialStringDialog() {
         super(true); // use current window as parent
         init();
         setTitle("Export String from SHAREit");
-        this.title1 = title1;
-        this.title2 = title2;
     }
 
     @Override
     protected JComponent createCenterPanel() {
         JPanel dialogPanel = new JPanel();
-
-        JLabel pathLabel = new JLabel(title1);
+        JLabel pathLabel = new JLabel("SHAREit path:");
         pathLabel.setLocation(0, 0);
         pathText = new JTextField();
         File deskTopFile = FileDirUtils.getDeskTopFile();
@@ -36,7 +31,7 @@ public class InputTwoDialog extends DialogWrapper {
         dialogPanel.add(pathText);
 
         int y = 120;
-        JLabel tagLabel = new JLabel(title2);
+        JLabel tagLabel = new JLabel("Special Key path:");
         tagLabel.setLocation(0, y);
         specialStringPath = new JTextField();
         specialStringPath.setPreferredSize(new Dimension(200, 25));
