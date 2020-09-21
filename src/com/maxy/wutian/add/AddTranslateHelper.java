@@ -151,12 +151,13 @@ public class AddTranslateHelper {
         if (!translateSrcDir.exists())
             translateSrcDir.mkdirs();
 
-        // out xmlFile to real file;
+//        // out xmlFile to real file;
         splitXmlFile(translateSrcDir, xmlFile);
     }
 
     private void splitXmlFile(File translateSrcDir, File xmlFile) {
         BufferedWriter bw = null;
+        String valueXXName = xmlFile.getParentFile().getName();
         try (BufferedReader br = new BufferedReader(new FileReader(xmlFile))) {
             StringBuffer sb = new StringBuffer();
             String line;
@@ -171,7 +172,7 @@ public class AddTranslateHelper {
                     }
 
                     String fileName = line.replace(Constants.WRITE_FILENAME_SPLIT, "").trim();
-                    bw = resetOutFileWriter(translateSrcDir, fileName);
+                    bw = resetOutFileWriter(translateSrcDir, fileName, valueXXName);
                     bw.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n");
                 } else {
                     if (bw == null) {
@@ -237,17 +238,20 @@ public class AddTranslateHelper {
         bw.flush();
     }
 
-    private BufferedWriter resetOutFileWriter(File srcDir, String fileName) {
+    private BufferedWriter resetOutFileWriter(File srcDir, String fileName, String valuesDirName) {
         BufferedWriter bw = null;
         try {
-            File file = new File(srcDir, fileName);
-            File valuesXXDir = file.getParentFile();
+            File valueFile = new File(srcDir, fileName);
+            String filePath = valueFile.getAbsolutePath();
+            String valueXXFilePath = filePath.replace("values", valuesDirName);
+            File valueXXFile = new File(valueXXFilePath);
+            File valuesXXDir = valueXXFile.getParentFile();
             if (!valuesXXDir.exists() )
                 valuesXXDir.mkdirs();
 
-            if (!file.exists())
-                file.createNewFile();
-            bw = new BufferedWriter(new FileWriter(file));
+            if (!valueXXFile.exists())
+                valueXXFile.createNewFile();
+            bw = new BufferedWriter(new FileWriter(valueXXFile));
         } catch (IOException e) {
         }
         return bw;
