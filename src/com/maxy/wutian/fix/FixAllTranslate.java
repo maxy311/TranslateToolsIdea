@@ -107,8 +107,16 @@ public class FixAllTranslate {
     public void getAllString(File file) {
         if (file.isDirectory()) {
             File[] files = file.listFiles(new ResFileFilter());
-            for (int i = files.length - 1; i >=0 ; i--) {
-                getAllString(files[i]);
+            Arrays.sort(files, new Comparator<File>() {
+                @Override
+                public int compare(File o1, File o2) {
+                    String name = o1.getName();
+                    String name1 = o2.getName();
+                    return name1.compareTo(name);
+                }
+            });
+            for (File listFile : files) {
+                getAllString(listFile);
             }
         } else {
             if (!TranslateFilter.isStringsFile(file))
