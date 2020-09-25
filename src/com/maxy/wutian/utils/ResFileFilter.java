@@ -9,7 +9,7 @@ public class ResFileFilter implements FileFilter {
         if (file.isHidden())
             return false;
         String name = file.getName();
-        if (name.equals("debug"))
+        if (name.toLowerCase().contains("debug"))
             return false;
         if (name.equals("test"))
             return false;
@@ -22,6 +22,8 @@ public class ResFileFilter implements FileFilter {
         if (name.equals("Launcher"))
             return false;
 
+        if (name.contains("build"))
+            return false;
         //not translate pay module;
         if (name.equals("BizPay"))
             return false;

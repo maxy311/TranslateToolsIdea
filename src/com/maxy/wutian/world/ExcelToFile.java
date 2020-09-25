@@ -2,6 +2,7 @@ package com.maxy.wutian.world;
 
 import com.maxy.wutian.Constants;
 import com.maxy.wutian.fileutils.FileUtils;
+import com.maxy.wutian.fileutils.Utils;
 import com.maxy.wutian.log.LogManager;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -73,16 +74,18 @@ public class ExcelToFile {
                 Cell firstCell = row.getCell(0);
                 if (firstCell != null) {
                     String moduleName = firstCell.getStringCellValue();
-                    moduleStartIndex = rowIndex;
-                    if (zhBw != null || enBw != null) {
-                        writeFooter(zhBw, enBw);
-                        zhBw.close();
-                        enBw.close();
-                    }
-                    zhBw = createModuleWrite(exportFileDir, moduleName, true);
-                    enBw = createModuleWrite(exportFileDir, moduleName, false);
+                    if (moduleName != null && moduleName.length() > 0 && hasValueStr(row.getCell(zhColumn))) {
+                        moduleStartIndex = rowIndex;
+                        if (zhBw != null || enBw != null) {
+                            writeFooter(zhBw, enBw);
+                            Utils.close(zhBw);
+                            Utils.close(enBw);
+                        }
+                        zhBw = createModuleWrite(exportFileDir, moduleName, true);
+                        enBw = createModuleWrite(exportFileDir, moduleName, false);
 
-                    writeXmlHeader(zhBw, enBw);
+                        writeXmlHeader(zhBw, enBw);
+                    }
                 }
                 if (zhBw == null || enBw == null)
                     continue;
@@ -96,7 +99,7 @@ public class ExcelToFile {
                     }
                 }
 
-                if (fileName != null)
+                if (fileName != null && fileName.length() > 0)
                     writeXmlFileName(enBw, zhBw, fileName, rowIndex != moduleStartIndex);
                 Cell zhCell = row.getCell(zhColumn);
                 writeStringLine(zhBw, zhCell);
@@ -105,6 +108,9 @@ public class ExcelToFile {
             }
             if (zhBw != null)
                 writeFooter(zhBw, enBw);
+
+            Utils.close(zhBw);
+            Utils.close(enBw);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (InvalidFormatException e) {
@@ -112,6 +118,13 @@ public class ExcelToFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean hasValueStr(Cell zhCell) {
+        if (zhCell == null)
+            return false;
+        String stringCellValue = zhCell.getStringCellValue();
+        return stringCellValue != null && stringCellValue.length() > 0;
     }
 
     private void writeStringLine(BufferedWriter writer, Cell cell) throws IOException {

@@ -26,6 +26,7 @@ public class TranslateFilter implements FileFilter {
             return false;
         if (name.contains("country_code_string"))
             return false;
-        return true;
+
+        return name.endsWith(".xml");
     }
 }
