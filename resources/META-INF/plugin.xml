@@ -26,6 +26,7 @@
             <action id="ExcelToFile.Action" class="com.maxy.wutian.action.ExcelToXmlAction" text="ExcelToXml"/>
             <action id="GetSpecialString.Action" class="com.maxy.wutian.action.GetSpecialStringAction" text="GetSpecialStringAction"/>
             <action id="ImportSpecial.Action" class="com.maxy.wutian.action.ImportSpecialAction" text="ImportSpecialAction"/>
+            <action id="FixAllTranslate.Action" class="com.maxy.wutian.action.FixStringAction" text="FixAllTranslate"/>
         </group>
 
     </actions>
