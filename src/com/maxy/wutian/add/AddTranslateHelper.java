@@ -84,6 +84,7 @@ public class AddTranslateHelper {
                 try (BufferedWriter bw = new BufferedWriter(new FileWriter(valueFile))) {
                     for (String str : stringList) {
                         String key = str.trim().split("\">")[0];
+                        key = key.replaceAll(" ", " ");
                         if (keySet.contains(key)) {
                             str = "    " + stringMap.get(key);
                         }
