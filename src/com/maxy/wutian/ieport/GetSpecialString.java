@@ -85,8 +85,8 @@ public class GetSpecialString {
                 System.out.println(line);
             }
             else {
-                if (line.startsWith("<string") || line.contains("plurals") || line.contains("<item") || line.contains("-array")) {
-                    String key = line.split("\">")[0];
+                if (line.startsWith("<string") ||  line.startsWith("<string-array")|| line.contains("plurals") || line.contains("<item") || line.contains("-array")) {
+                    String key = line.split("\">")[0].trim();
                     keys.add(key);
                     System.out.println(key);
                 }
@@ -140,18 +140,15 @@ public class GetSpecialString {
         for (File listFile : file.listFiles()) {
             if (!TranslateFilter.isStringsFile(listFile))
                 continue;
-//                System.out.println(listFile.getAbsoluteFile());
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(listFile)))) {
-                String line = null;
-                while ((line = br.readLine()) != null) {
-                    for (String key : keys) {
-                        if (line.contains(key)) {
-                            storeToList(listFile, line);
-                        }
-                    }
+            Map<String, String> fileStrMap = FileUtils.readStringToMap(listFile);
+            if (fileStrMap == null || fileStrMap.isEmpty())
+                continue;
+            Set<String> fileKeys = fileStrMap.keySet();
+            for (String key : keys) {
+                if (fileKeys.contains(key)) {
+                    String value = fileStrMap.get(key);
+                    storeToList(listFile, value);
                 }
-            } catch (FileNotFoundException e) {
-            } catch (IOException e) {
             }
         }
     }
