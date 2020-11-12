@@ -9,8 +9,9 @@ public class TestJava {
 //        int indexOf = str.indexOf(special);
 //        System.out.println(str.charAt(indexOf + special.length()));
 
-        String path = "/Users/maxy/Android/workspace/troy";
-        String currentBranch = ShellUtils.getCurrentBranch(path);
+        String path = "/Users/maxy/Android/workspace/SHAREit";
+        String tag = "develop";
+        boolean currentBranch = ShellUtils.checkoutToTag(path, tag);
         System.out.println(currentBranch);
     }
 }

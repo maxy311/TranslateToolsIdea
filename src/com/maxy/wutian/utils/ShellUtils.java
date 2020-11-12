@@ -8,12 +8,21 @@ import java.io.*;
 public class ShellUtils {
 
     public static boolean checkoutToTag(String projectPath, String tag) {
-        File gitForAllFile = new File(projectPath + File.separator + "git-for-all.sh");
-        if (!gitForAllFile.exists()) {
-            return false;
-        }
+        File projectFile = new File(projectPath);
+        File gitForAll = new File(projectFile, "git_checkout.sh");
         try {
-            String command = gitForAllFile.getAbsolutePath() + " checkout " + tag;
+            if (!gitForAll.exists())
+                gitForAll.createNewFile();
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(gitForAll));
+            bw.write(Constants.GIT_FOR_ALL);
+            bw.flush();
+            bw.close();
+
+            String permissionCommand = "chmod 777 " + gitForAll.getAbsolutePath();
+            Runtime.getRuntime().exec(permissionCommand);
+
+            String command = gitForAll.getAbsolutePath() + " " + projectPath + " checkout " + tag;
             Process ps = Runtime.getRuntime().exec(command);
             ps.waitFor();
 
@@ -27,7 +36,10 @@ public class ShellUtils {
             LogManager.getInstance().log(result);
             return true;
         } catch (Exception e) {
+            System.out.println(e.toString());
             return false;
+        } finally {
+            gitForAll.delete();
         }
     }
 
