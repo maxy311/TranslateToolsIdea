@@ -45,7 +45,7 @@ public class SampleDialogWrapper extends DialogWrapper {
         JLabel compareName = new JLabel("比较目录:");
         compareName.setLocation(0, 2 * y);
         compareText = new JTextField();
-        compareText.setText("values-ar");
+        compareText.setText("values-in");
         compareText.setPreferredSize(new Dimension(200, 25));
         compareText.setLocation(50, 2 * y);
         dialogPanel.add(compareName);

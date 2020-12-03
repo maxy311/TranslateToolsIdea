@@ -17,9 +17,10 @@ public class GetTranslateAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
         Project project = e.getProject();
-        printProjectInfo(project);
+//        printProjectInfo(project);
 //        showDialog(project);
         getTranslate(project);
+//        getTranslateSimple(project);
     }
 
     private void printProjectInfo(Project project) {
