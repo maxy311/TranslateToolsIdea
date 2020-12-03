@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.wutian.maxy</id>
     <name>TranslateTools</name>
-    <version>2.0</version>
+    <version>3.0</version>
     <vendor email="maxy@ushareit.com" url="http://www.maxy.com">Maxy</vendor>
 
     <description>This is a translate tools maxy@ushareit.com maxy@ushareit.com</description>

@@ -10,7 +10,7 @@ public class TestJava {
 //        System.out.println(str.charAt(indexOf + special.length()));
 
         String path = "/Users/maxy/Android/workspace/SHAREit";
-        String tag = "develop";
+        String tag = "master";
         boolean currentBranch = ShellUtils.checkoutToTag(path, tag);
         System.out.println(currentBranch);
     }
