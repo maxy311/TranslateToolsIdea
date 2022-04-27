@@ -82,6 +82,10 @@ public class AddTranslateHelper {
                 Map<String, String> stringMap = FileUtils.readStringToMap(valueFile);
                 Set<String> keySet = stringMap.keySet();
                 try (BufferedWriter bw = new BufferedWriter(new FileWriter(valueFile))) {
+                    if (stringList == null) {
+                        System.out.println(valueFile.getAbsolutePath());
+                        break;
+                    }
                     for (String str : stringList) {
                         String key = str.trim().split("\">")[0];
                         key = key.replaceAll(" ", " ");

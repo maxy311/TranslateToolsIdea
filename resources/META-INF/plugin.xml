@@ -29,6 +29,10 @@
             <action id="FixAllTranslate.Action" class="com.maxy.wutian.action.FixStringAction" text="FixAllTranslate"/>
         </group>
 
+        <group id="com.wutian.maxy.action.GroupedActions2" text="New TranslateTools" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="org.intellij.sdk.action.PopupDialogAction"/>
+            <action id="GetTranslate.GetAction" class="com.maxy.wutian.action.GetTranslateAction" text="GetTranslate"/>
+        </group>
     </actions>
 
 </idea-plugin>

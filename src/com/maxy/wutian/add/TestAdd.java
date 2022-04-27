@@ -7,7 +7,7 @@ public class TestAdd {
 //        LogManager.getInstance().log(parentPath);
 
         String projectPath = "/Users/maxy/Android/workspace/SHAREit";
-        String translatePath = "/Users/maxy/Desktop/SHAREit_Translate_Clean-44L";
+        String translatePath = "/Users/maxy/Desktop/SHAREit_LiteClean-9L";
         AddTranslateHelper addTranslateHelper = new AddTranslateHelper("SHAREit", projectPath, translatePath);
         addTranslateHelper.start();
     }
