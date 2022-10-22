@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.maxy.wutian.dialog.GetSpecialStringDialog;
+import com.maxy.wutian.ieport.FixModuleValueXXString;
 import com.maxy.wutian.ieport.GetSpecialString;
 
 public class GetSpecialStringAction extends AnAction {
@@ -16,7 +17,10 @@ public class GetSpecialStringAction extends AnAction {
         getSpecialStringDialog.showAndGet();
         String shareitPath = getSpecialStringDialog.getFirstInput();
         String inputPath = getSpecialStringDialog.getSecondInput();
-        GetSpecialString getSpecialString = new GetSpecialString(project.getName(), shareitPath, inputPath);
-        getSpecialString.start();
+//        GetSpecialString getSpecialString = new GetSpecialString(project.getName(), shareitPath, inputPath);
+//        getSpecialString.start();
+
+        FixModuleValueXXString fixModuleValueXXString = new FixModuleValueXXString(shareitPath, inputPath);
+        fixModuleValueXXString.startGet();
     }
 }

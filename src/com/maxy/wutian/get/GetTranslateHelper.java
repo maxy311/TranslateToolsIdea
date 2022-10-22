@@ -48,7 +48,7 @@ public class GetTranslateHelper {
         File projectFile = new File(projectPath);
         //read values file to map
         Map<String, Map<String, Map<String, String>>> valuesMap = new HashMap<>(); // module -- file -- strings.
-        readStringsToMap(valuesMap, projectFile, "values");
+        readStringsToMap(valuesMap, projectFile, "values-ms");
 
         //read values-XX file to map
         Map<String, Map<String, Map<String, String>>> valuesXXMap = new HashMap<>();

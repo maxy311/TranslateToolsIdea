@@ -17,7 +17,7 @@ public class GetSpecialStringDialog extends DialogWrapper {
     @Override
     protected JComponent createCenterPanel() {
         JPanel dialogPanel = new JPanel();
-        JLabel pathLabel = new JLabel("SHAREit path:");
+        JLabel pathLabel = new JLabel("Project Root Path:");
         pathLabel.setLocation(0, 0);
         pathText = new JTextField();
         pathText.setPreferredSize(new Dimension(200, 25));
@@ -26,7 +26,7 @@ public class GetSpecialStringDialog extends DialogWrapper {
         dialogPanel.add(pathText);
 
         int y = 120;
-        JLabel tagLabel = new JLabel("Special Key path:");
+        JLabel tagLabel = new JLabel("Special Module values path:");
         tagLabel.setLocation(0, y);
         specialStringPath = new JTextField();
         specialStringPath.setPreferredSize(new Dimension(200, 25));

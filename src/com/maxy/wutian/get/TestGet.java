@@ -7,10 +7,10 @@ public class TestGet {
     }
 
     private static void testSHAREit() {
-        String projectPath = "/Users/maxiaoyu/Downloads/sdkshareui";
-        String outPutPath = "/Users/maxy/Desktop";
-        String lastTag = "";
-        GetTranslateHelper getSHAREitTranslate2 = new GetTranslateHelper("sdkshareui", projectPath, outPutPath, lastTag, "values-aa");
+        String projectPath = "/Users/maxiaoyu/Android/workspace/shareit_12/SHAREit";
+        String outPutPath = "/Users/maxiaoyu/Desktop";
+        String lastTag = null;
+        GetTranslateHelper getSHAREitTranslate2 = new GetTranslateHelper("SHAREit", projectPath, outPutPath, lastTag, "values-aa");
         getSHAREitTranslate2.start();
     }
 
