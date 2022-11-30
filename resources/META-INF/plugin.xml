@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.wutian.maxy</id>
     <name>TranslateTools</name>
-    <version>4.0</version>
+    <version>5.0</version>
     <vendor email="maxy@ushareit.com" url="http://www.maxy.com">Maxy</vendor>
 
     <description>This is a translate tools maxy@ushareit.com maxy@ushareit.com</description>
@@ -32,6 +32,9 @@
         <group id="com.wutian.maxy.action.GroupedActions2" text="New TranslateTools" popup="true">
             <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="org.intellij.sdk.action.PopupDialogAction"/>
             <action id="GetTranslate.GetAction" class="com.maxy.wutian.action.GetTranslateAction" text="GetTranslate"/>
+            <action id="AddTranslate.AddAction" class="com.maxy.wutian.action.AddTranslateAction" text="AddTranslate"/>
+            <action id="GetSpecialString.Action" class="com.maxy.wutian.action.GetSpecialStringAction" text="GetSpecialStringAction"/>
+
         </group>
     </actions>
 

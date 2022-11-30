@@ -18,6 +18,8 @@ public class GetTranslateSpecial {
     static String SHAREit_PATH = "/Users/maxiaoyu/Android/workspace/SHAREit";
     static String valuesPath = "/Users/maxiaoyu/Android/workspace/SHAREit2/BizLocal/ModuleVideoPlayer/src/main/res/values";
     static String outPutPath = "/Users/maxiaoyu/Android/workspace/SHAREit2/BizLocal/ModuleVideoPlayer/src/main/res/";
+
+//    /Users/maxiaoyu/Android/workspace/SHAREit2/BizClean/ModuleCleanit/src/main/res/values
     public static void main(String[] args) {
         List<String> specialDir = getAllValueDirName();
         System.out.println(specialDir.size() + "     " + specialDir);

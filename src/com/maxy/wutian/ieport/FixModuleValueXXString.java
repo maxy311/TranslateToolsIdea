@@ -10,9 +10,13 @@ import java.io.OutputStreamWriter;
 import java.util.*;
 
 public class FixModuleValueXXString {
-    private String PROJECT_ROOT_PATH = "/Users/maxiaoyu/Android/workspace/SHAREit";
-    private String moduleValuesPath = "/Users/maxiaoyu/Android/workspace/SHAREit2/BizLocal/ModuleVideoPlayer/src/main/res/values";
+    private static String PROJECT_ROOT_PATH = "/Users/maxiaoyu/Android/workspace/SHAREit";
+    private static String moduleValuesPath = "/Users/maxiaoyu/Android/workspace/SHAREit/BizInnovation/ModuleSpace/src/main/res/values";
 
+    public static void main(String[] args) {
+        FixModuleValueXXString aa = new FixModuleValueXXString(PROJECT_ROOT_PATH, moduleValuesPath);
+        aa.startGet();
+    }
     public FixModuleValueXXString(String projectRootPath, String moduleValuesPath) {
         PROJECT_ROOT_PATH = projectRootPath;
         this.moduleValuesPath = moduleValuesPath;
