@@ -25,6 +25,7 @@ public class GetTranslateHelper {
     private String lastTag;
     private String compareDir;
 
+    private static final String compare_origin_dir = "values";
     public GetTranslateHelper(String projectName, String projectPath, String outPutPath, String lastTag) {
         this(projectName, projectPath, outPutPath, lastTag, "values-ar");
     }
@@ -48,7 +49,7 @@ public class GetTranslateHelper {
         File projectFile = new File(projectPath);
         //read values file to map
         Map<String, Map<String, Map<String, String>>> valuesMap = new HashMap<>(); // module -- file -- strings.
-        readStringsToMap(valuesMap, projectFile, "values-ms");
+        readStringsToMap(valuesMap, projectFile, compare_origin_dir);
 
         //read values-XX file to map
         Map<String, Map<String, Map<String, String>>> valuesXXMap = new HashMap<>();
@@ -60,7 +61,7 @@ public class GetTranslateHelper {
             String currentBranch = ShellUtils.getCurrentBranch(projectPath);
             if (ShellUtils.checkoutToTag(projectPath, lastTag)) {
                 LogManager.getInstance().log("has checkout to:" + lastTag + " ;; currentBranch = " + currentBranch);
-                readStringsToMap(preValueMap, projectFile, "values");
+                readStringsToMap(preValueMap, projectFile, compare_origin_dir);
                 if (currentBranch != null)
                     ShellUtils.checkoutToTag(projectPath, currentBranch);
             }
@@ -269,7 +270,7 @@ public class GetTranslateHelper {
         if (isZHFile)
             valueDir = new File(translateOutFile, "values-zh-rCN");
         else
-            valueDir = new File(translateOutFile, "values");
+            valueDir = new File(translateOutFile, compare_origin_dir);
         if (!valueDir.exists())
             valueDir.mkdir();
         File file = new File(valueDir, module + ".xml");
